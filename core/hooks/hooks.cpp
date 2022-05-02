@@ -31,6 +31,10 @@ bool hooks::initialize() {
 		throw std::runtime_error("failed to initialize paint_traverse. (outdated index?)");
 	custom_helpers::state_to_console("Hooks", "paint_traverse initialized!");
 
+	if (MH_CreateHook(paint_traverse_target, &paint_traverse::hook, reinterpret_cast<void**>(&paint_traverse_original)) != MH_OK)
+		throw std::runtime_error("failed to initialize paint_traverse. (outdated index?)");
+	custom_helpers::state_to_console("Hooks", "FireEventClientSide initialized!");
+
 	if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK)
 		throw std::runtime_error("failed to enable hooks.");
 

@@ -19,6 +19,7 @@ namespace variables {
 	inline bool nade_predict_bool = true;
 	inline bool noflash_bool = true;
 	inline bool noscope_bool  = true;
+	inline bool bullet_tracers_bool = false;
 	inline bool crosshair_bool = false;
 	inline bool recoil_crosshair_bool = false;
 
