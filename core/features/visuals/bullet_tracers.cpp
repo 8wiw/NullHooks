@@ -1,33 +1,10 @@
 #include "../features.hpp"
 
 // https://www.unknowncheats.me/forum/counterstrike-global-offensive/235892-bullet-tracer.html
-class cbullet_tracer {
-public:
-	void log(i_game_event& event);
-	void render();
-private:
-	class cbullet_tracer_info
-	{
-	public:
-		cbullet_tracer_info(vec3_t src, vec3_t dst, float time, color color)
-		{
-			this->src = src;
-			this->dst = dst;
-			this->time = time;
-			this->color = color;
-		}
 
-		vec3_t src, dst;
-		float time;
-		color color;
-	};
-
-	std::vector<cbullet_tracer_info> logs;
-};
-
-void cbullet_tracer::log(i_game_event& event) {
+void visuals::bullet_tracers::cbullet_tracer::log(i_game_event& event, const unsigned int name_hash) {
 	//if we receive bullet_impact event
-	if (strstr(event.get_name(), "bullet_impact"))
+	if (name_hash == fnv::hash("player_hurt"))
 	{
 		auto index = interfaces::engine->get_player_for_user_id(event.get_int("userid"));
 
@@ -58,7 +35,7 @@ void cbullet_tracer::log(i_game_event& event) {
 	}
 }
 
-void cbullet_tracer::render() {
+void visuals::bullet_tracers::cbullet_tracer::render() {
 	if (!variables::bullet_tracers_bool) return;
 	if (!csgo::local_player) return;
 
