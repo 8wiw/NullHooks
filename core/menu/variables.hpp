@@ -31,6 +31,7 @@ namespace variables {
 	inline bool bullet_tracers_bool = false;
 	inline bool crosshair_bool = false;
 	inline bool recoil_crosshair_bool = false;
+
 	inline float custom_fov_slider = 90.f;
 	inline float custom_vmfov_slider = 1.f;
 
@@ -47,6 +48,8 @@ namespace variables {
 	// Misc
 	inline bool bhop_bool = true;
 	inline bool chickenpride_bool = false;
+	inline bool draw_watermark = true;
+	inline bool draw_stats = true;
 	
 	namespace spectators {
 		inline bool spectator_list_bool = true;

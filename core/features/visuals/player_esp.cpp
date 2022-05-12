@@ -11,11 +11,14 @@ void visuals::playeresp() {
 	if (!interfaces::engine->is_connected() || !interfaces::engine->is_in_game()) return;
 	if (!csgo::local_player) return;
 
+	// Will ignore ESP if the player being spectated
+	player_t* local_player_ent = (csgo::local_player->is_alive()) ? csgo::local_player : reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity_handle(csgo::local_player->observer_target()));
+
 	for (int iPlayer = 0; iPlayer < 64; iPlayer++)
 	{
 		player_t* pCSPlayer = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(iPlayer));
 		if (!pCSPlayer) continue;
-		if (pCSPlayer == csgo::local_player) continue;
+		if (pCSPlayer == local_player_ent) continue;
 		if (pCSPlayer->dormant()) continue;
 		if (!(pCSPlayer->is_alive() && pCSPlayer->health() > 0)) continue;
 
@@ -99,11 +102,10 @@ void visuals::playeresp() {
 				if (pCSPlayer->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
-				}
-				else if (pCSPlayer->has_defuser()) {
+				} else if (pCSPlayer->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
 					item_num++;
-				}
+				} // TODO: Has c4
 
 				if (pCSPlayer->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
@@ -127,11 +129,10 @@ void visuals::playeresp() {
 				if (pCSPlayer->is_defusing()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, color::blue(255));
 					item_num++;
-				}
-				else if (pCSPlayer->has_defuser()) {
+				} else if (pCSPlayer->has_defuser()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "D", true, variables::colors::friendly_color_softer);
 					item_num++;
-				}
+				} // TODO: Has c4
 
 				if (pCSPlayer->is_scoped()) {
 					render::draw_text_string(x + w + 5, y + 1 + 10 * item_num, render::fonts::watermark_font, "S", true, (pCSPlayer->is_defusing()) ? color::blue(255) : variables::colors::friendly_color_softer);
